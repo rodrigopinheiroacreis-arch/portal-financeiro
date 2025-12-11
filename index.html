@@ -132,9 +132,15 @@
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2"><Banknote className="text-orange-600"/> Gestão Tributária</h2>
                         <div className="flex gap-2">
-                            <button onClick={exportListToXLSX} className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"><FileSpreadsheet size={18} /> Excel</button>
-                            <button onClick={exportListToPDF} className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"><Download size={18} /> PDF</button>
-                            <button onClick={handleNewClick} className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"><Plus size={20} /> Novo</button>
+                            <button onClick={exportListToXLSX} className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+                                <FileSpreadsheet size={18} /> Excel
+                            </button>
+                            <button onClick={exportListToPDF} className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+                                <Download size={18} /> PDF
+                            </button>
+                            <button onClick={handleNewClick} className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                                <Plus size={20} /> Novo
+                            </button>
                         </div>
                     </div>
                     <div className="relative">
@@ -203,15 +209,52 @@
             return (
                 <div className="space-y-6 fade-in">
                     <div className="flex flex-col md:flex-row justify-between gap-4">
-                        <div className="flex items-center gap-4"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><div><h2 className="text-2xl font-bold text-slate-800">Detalhamento Tributário</h2><p className="text-slate-500 text-sm">{selectedTax.client} • {selectedTax.obligation}</p></div></div>
+                        <div className="flex items-center gap-4">
+                            <button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full">
+                                <ArrowLeft size={24} />
+                            </button>
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-800">Detalhamento Tributário</h2>
+                            <p className="text-slate-500 text-sm">{selectedTax.client} • {selectedTax.obligation}</p>
+                        </div>
+                    </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div className="bg-white p-4 rounded-xl border shadow-sm"><p className="text-xs text-slate-500 font-semibold">Principal</p><p className="text-xl font-bold">{formatCurrency(selectedTax.principal)}</p></div>
-                        <div className="bg-white p-4 rounded-xl border shadow-sm"><p className="text-xs text-slate-500 font-semibold">Multa + Juros</p><p className="text-xl font-bold text-red-600">{formatCurrency(selectedTax.fine + selectedTax.interest)}</p></div>
-                        <div className="bg-white p-4 rounded-xl border shadow-sm"><p className="text-xs text-slate-500 font-semibold">Honorários + Encargos</p><p className="text-xl font-bold text-orange-600">{formatCurrency(selectedTax.fees + selectedTax.charges)}</p></div>
-                        <div className="bg-white p-4 rounded-xl border bg-orange-50 border-orange-100"><p className="text-xs text-orange-600 font-semibold">Total Geral</p><p className="text-xl font-bold text-orange-800">{formatCurrency(selectedTax.totalSum)}</p></div>
+                        <div className="bg-white p-4 rounded-xl border shadow-sm">
+                            <p className="text-xs text-slate-500 font-semibold">Principal</p>
+                            <p className="text-xl font-bold">{formatCurrency(selectedTax.principal)}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border shadow-sm">
+                            <p className="text-xs text-slate-500 font-semibold">Multa + Juros</p>
+                            <p className="text-xl font-bold text-red-600">{formatCurrency(selectedTax.fine + selectedTax.interest)}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border shadow-sm">
+                            <p className="text-xs text-slate-500 font-semibold">Honorários + Encargos</p>
+                            <p className="text-xl font-bold text-orange-600">{formatCurrency(selectedTax.fees + selectedTax.charges)}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-xl border bg-orange-50 border-orange-100">
+                            <p className="text-xs text-orange-600 font-semibold">Total Geral</p>
+                            <p className="text-xl font-bold text-orange-800">{formatCurrency(selectedTax.totalSum)}</p>
+                        </div>
                     </div>
-                    <div className="bg-white rounded-xl shadow-sm border overflow-x-auto"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 uppercase text-xs"><tr><th className="px-3 py-3">#</th><th className="px-3 py-3">Vencimento</th><th className="px-3 py-3 text-right">Valor Parcela</th><th className="px-3 py-3 text-right">Saldo Devedor</th></tr></thead><tbody className="divide-y">{schedule.map(i => (<tr key={i.number} className="hover:bg-slate-50"><td className="px-3 py-2">{i.number}</td><td className="px-3 py-2">{formatDate(i.dueDate)}</td><td className="px-3 py-2 text-right font-bold text-orange-700">{formatCurrency(i.value)}</td><td className="px-3 py-2 text-right font-medium text-slate-700">{formatCurrency(i.balance)}</td></tr>))}</tbody></table></div>
+                    <div className="bg-white rounded-xl shadow-sm border overflow-x-auto">
+                        <table className="w-full text-sm text-left">
+                            <thead className="bg-slate-50 text-slate-600 uppercase text-xs">
+                                <tr>
+                                    <th className="px-3 py-3">#</th>
+                                    <th className="px-3 py-3">Vencimento</th>
+                                    <th className="px-3 py-3 text-right">Valor Parcela</th>
+                                    <th className="px-3 py-3 text-right">Saldo Devedor</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y">{schedule.map(i => (<tr key={i.number} className="hover:bg-slate-50">
+                                <td className="px-3 py-2">{i.number}</td>
+                                <td className="px-3 py-2">{formatDate(i.dueDate)}</td>
+                                <td className="px-3 py-2 text-right font-bold text-orange-700">{formatCurrency(i.value)}</td>
+                                <td className="px-3 py-2 text-right font-medium text-slate-700">{formatCurrency(i.balance)}</td></tr>))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             );
         };
@@ -222,31 +265,73 @@
 
             return (
                 <div className="max-w-4xl mx-auto fade-in">
-                    <div className="flex items-center gap-4 mb-6"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><h2 className="text-2xl font-bold text-slate-800">{editingId ? 'Editar' : 'Novo'} Imposto</h2></div>
+                    <div className="flex items-center gap-4 mb-6">
+                        <button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full">
+                            <ArrowLeft size={24} />
+                        </button>
+                        <h2 className="text-2xl font-bold text-slate-800">{editingId ? 'Editar' : 'Novo'} Imposto</h2>
+                    </div>
                     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="col-span-full border-b pb-2"><h3 className="text-sm font-bold text-orange-600 flex gap-2"><Banknote size={16}/> Dados do Tributo</h3></div>
+                            <div className="col-span-full border-b pb-2">
+                                <h3 className="text-sm font-bold text-orange-600 flex gap-2">
+                                    <Banknote size={16}/> Dados do Tributo
+                                </h3>
+                            </div>
                             
-                            <div className="md:col-span-1"><label className="block text-sm font-medium">Cliente</label><input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" placeholder="Nome da Empresa" /></div>
-                            <div><label className="block text-sm font-medium">Obrigação</label>
+                            <div className="md:col-span-1">
+                                <label className="block text-sm font-medium">Cliente</label>
+                                <input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" placeholder="Nome da Empresa" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Obrigação</label>
                                 <select required name="obligation" value={formData.obligation} onChange={handleInputChange} className="w-full p-2 border rounded outline-none bg-white">
                                     <option value="">Selecione...</option>
                                     {obligations.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                                 </select>
                             </div>
-                            <div><label className="block text-sm font-medium">Data Referência</label><input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
-                            <div><label className="block text-sm font-medium">Parcelas</label><input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
+                            <div>
+                                <label className="block text-sm font-medium">Data Referência</label>
+                                <input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Parcelas</label>
+                                <input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
                             
-                            <div className="col-span-full border-b pb-2 mt-4"><h3 className="text-sm font-bold text-green-600 flex gap-2"><DollarSign size={16}/> Composição da Dívida</h3></div>
-                            <div><label className="block text-sm font-medium">Valor Principal (R$)</label><input required type="number" step="0.01" name="principal" value={formData.principal} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
-                            <div><label className="block text-sm font-medium">Multa (R$)</label><input required type="number" step="0.01" name="fine" value={formData.fine} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
-                            <div><label className="block text-sm font-medium">Juros (R$)</label><input required type="number" step="0.01" name="interest" value={formData.interest} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
-                            <div><label className="block text-sm font-medium">Honorários (R$)</label><input required type="number" step="0.01" name="fees" value={formData.fees} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
-                            <div><label className="block text-sm font-medium">Encargos (R$)</label><input required type="number" step="0.01" name="charges" value={formData.charges} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>
+                            <div className="col-span-full border-b pb-2 mt-4">
+                                <h3 className="text-sm font-bold text-green-600 flex gap-2"><DollarSign size={16}/> Composição da Dívida</h3>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Valor Principal (R$)</label>
+                                <input required type="number" step="0.01" name="principal" value={formData.principal} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Multa (R$)</label>
+                                <input required type="number" step="0.01" name="fine" value={formData.fine} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Juros (R$)</label>
+                                <input required type="number" step="0.01" name="interest" value={formData.interest} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Honorários (R$)</label>
+                                <input required type="number" step="0.01" name="fees" value={formData.fees} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Encargos (R$)</label>
+                                <input required type="number" step="0.01" name="charges" value={formData.charges} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
                             
-                            <div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center"><span className="text-slate-600 font-medium">Total Geral:</span><span className="text-2xl font-bold text-orange-700">{formatCurrency(totalSum)}</span></div>
+                            <div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center">
+                                <span className="text-slate-600 font-medium">Total Geral:</span>
+                                <span className="text-2xl font-bold text-orange-700">{formatCurrency(totalSum)}</span>
+                            </div>
                         </div>
-                        <div className="mt-8 flex justify-end gap-3"><button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button><button type="submit" className="px-6 py-2 bg-orange-600 text-white rounded hover:bg-orange-700">Salvar</button></div>
+                        <div className="mt-8 flex justify-end gap-3">
+                            <button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button>
+                            <button type="submit" className="px-6 py-2 bg-orange-600 text-white rounded hover:bg-orange-700">Salvar</button>
+                        </div>
                     </form>
                 </div>
             );
@@ -309,19 +394,199 @@
             const exportListToPDF = () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text("Seguros", 14, 15); doc.autoTable({ head: [["Cliente", "Apólice", "Seguradora", "Total"]], body: filteredInsurances.map(ins => [ins.client, ins.policy, ins.insurer, formatCurrency(ins.totalSum)]), startY: 20 }); doc.save("seguros.pdf"); };
             return (
                 <div className="space-y-6 fade-in">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4"><h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2"><Shield className="text-purple-600"/> Seguros</h2><div className="flex gap-2"><button onClick={exportListToXLSX} className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"><FileSpreadsheet size={18} /> Excel</button><button onClick={exportListToPDF} className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm"><Download size={18} /> PDF</button><button onClick={handleNewClick} className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"><Plus size={20} /> Novo</button></div></div>
-                    <div className="relative"><div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="text-slate-400" size={20} /></div><input type="text" placeholder="Buscar..." className="w-full pl-10 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none shadow-sm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /></div>
-                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden overflow-x-auto"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 font-semibold uppercase text-xs"><tr><th className="px-4 py-3">Cliente</th><th className="px-4 py-3">Apólice</th><th className="px-4 py-3">Seguradora</th><th className="px-4 py-3">Data</th><th className="px-4 py-3 text-right">Valor</th><th className="px-4 py-3 text-right font-bold text-purple-700">Total</th><th className="px-4 py-3 text-center">Ações</th></tr></thead><tbody className="divide-y divide-slate-100">{filteredInsurances.map((ins) => (<tr key={ins.id} className="hover:bg-purple-50 transition-colors cursor-pointer" onClick={() => { setSelectedInsurance(ins); setView('details'); }}><td className="px-4 py-3 font-medium">{ins.client}</td><td className="px-4 py-3">{ins.policy}</td><td className="px-4 py-3">{ins.insurer}</td><td className="px-4 py-3">{formatDate(ins.date)}</td><td className="px-4 py-3 text-right">{formatCurrency(ins.amount)}</td><td className="px-4 py-3 text-right font-bold">{formatCurrency(ins.totalSum)}</td><td className="px-4 py-3"><div className="flex items-center justify-center gap-2"><button onClick={(e) => { e.stopPropagation(); handleEditClick(ins); }} className="p-1 text-blue-600"><Edit size={16} /></button><button onClick={(e) => { e.stopPropagation(); handleDeleteClick(ins); }} className="p-1 text-red-600"><Trash2 size={16} /></button><ChevronRight size={16} className="text-slate-300"/></div></td></tr>))}</tbody></table></div>
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                            <Shield className="text-purple-600"/> Seguros
+                        </h2>
+                        <div className="flex gap-2">
+                            <button onClick={exportListToXLSX} className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+                                <FileSpreadsheet size={18} /> Excel
+                            </button>
+                            <button onClick={exportListToPDF} className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+                                <Download size={18} /> PDF
+                            </button>
+                            <button onClick={handleNewClick} className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                                <Plus size={20} /> Novo
+                            </button>
+                        </div>
+                    </div>
+                    <div className="relative"><div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Search className="text-slate-400" size={20} />
+                    </div>
+                    <input type="text" placeholder="Buscar..." className="w-full pl-10 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none shadow-sm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /></div>
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden overflow-x-auto">
+                        <table className="w-full text-sm text-left">
+                            <thead className="bg-slate-50 text-slate-600 font-semibold uppercase text-xs">
+                                <tr>
+                                    <th className="px-4 py-3">Cliente</th>
+                                    <th className="px-4 py-3">Apólice</th>
+                                    <th className="px-4 py-3">Seguradora</th>
+                                    <th className="px-4 py-3">Data</th>
+                                    <th className="px-4 py-3 text-right">Valor</th>
+                                    <th className="px-4 py-3 text-right font-bold text-purple-700">Total</th>
+                                    <th className="px-4 py-3 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">{filteredInsurances.map((ins) => (<tr key={ins.id} className="hover:bg-purple-50 transition-colors cursor-pointer" onClick={() => { setSelectedInsurance(ins); setView('details'); }}>
+                                <td className="px-4 py-3 font-medium">{ins.client}</td>
+                                <td className="px-4 py-3">{ins.policy}</td>
+                                <td className="px-4 py-3">{ins.insurer}</td>
+                                <td className="px-4 py-3">{formatDate(ins.date)}</td>
+                                <td className="px-4 py-3 text-right">{formatCurrency(ins.amount)}</td>
+                                <td className="px-4 py-3 text-right font-bold">{formatCurrency(ins.totalSum)}</td>
+                                <td className="px-4 py-3">
+                                    <div className="flex items-center justify-center gap-2">
+                                        <button onClick={(e) => { e.stopPropagation(); handleEditClick(ins); }} className="p-1 text-blue-600"><Edit size={16} /></button>
+                                        <button onClick={(e) => { e.stopPropagation(); handleDeleteClick(ins); }} className="p-1 text-red-600"><Trash2 size={16} /></button>
+                                        <ChevronRight size={16} className="text-slate-300"/>
+                                    </div>
+                                </td></tr>))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             );
         };
-        const InsuranceDetailsView = ({ selectedInsurance, setView }) => { if (!selectedInsurance) return null; const schedule = []; const installmentValue = selectedInsurance.totalSum / selectedInsurance.installments; let currentBalance = selectedInsurance.totalSum; const parts = selectedInsurance.date.split('-'); const startDate = new Date(parts[0], parts[1] - 1, parts[2]); for (let i = 1; i <= selectedInsurance.installments; i++) { currentBalance -= installmentValue; const dueDate = new Date(startDate); dueDate.setMonth(startDate.getMonth() + i); schedule.push({ number: i, dueDate, value: installmentValue, balance: Math.max(0, currentBalance) }); } return (<div className="space-y-6 fade-in"><div className="flex items-center gap-4"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><div><h2 className="text-2xl font-bold text-slate-800">Detalhamento</h2><p className="text-slate-500 text-sm">{selectedInsurance.insurer} • {selectedInsurance.policy}</p></div></div><div className="bg-white rounded-xl shadow-sm border overflow-x-auto"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 uppercase text-xs"><tr><th className="px-3 py-3">#</th><th className="px-3 py-3">Vencimento</th><th className="px-3 py-3 text-right">Valor</th><th className="px-3 py-3 text-right">Saldo</th></tr></thead><tbody className="divide-y">{schedule.map(i => (<tr key={i.number} className="hover:bg-slate-50"><td className="px-3 py-2">{i.number}</td><td className="px-3 py-2">{formatDate(i.dueDate)}</td><td className="px-3 py-2 text-right font-bold text-purple-700">{formatCurrency(i.value)}</td><td className="px-3 py-2 text-right font-medium">{formatCurrency(i.balance)}</td></tr>))}</tbody></table></div></div>); };
-        const InsuranceForm = ({ formData, setFormData, handleSubmit, setView, editingId, handleInputChange }) => { const totalSum = (parseFloat(formData.amount) || 0) + (parseFloat(formData.iof) || 0); return (<div className="max-w-4xl mx-auto fade-in"><div className="flex items-center gap-4 mb-6"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><h2 className="text-2xl font-bold text-slate-800">{editingId ? 'Editar' : 'Novo'} Seguro</h2></div><form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-slate-200"><div className="grid grid-cols-1 md:grid-cols-2 gap-6"><div className="col-span-full"><label className="block text-sm font-medium">Cliente</label><input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Apólice</label><input required name="policy" value={formData.policy} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Seguradora</label><input required name="insurer" value={formData.insurer} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Data</label><input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Parc.</label><input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Valor (R$)</label><input required type="number" step="0.01" name="amount" value={formData.amount} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">IOF (R$)</label><input required type="number" step="0.01" name="iof" value={formData.iof} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center"><span className="text-slate-600 font-medium">Total Geral:</span><span className="text-2xl font-bold text-purple-700">{formatCurrency(totalSum)}</span></div></div><div className="mt-8 flex justify-end gap-3"><button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button><button type="submit" className="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Salvar</button></div></form></div>); };
+        const InsuranceDetailsView = ({ selectedInsurance, setView }) => { if (!selectedInsurance) return null; const schedule = []; const installmentValue = selectedInsurance.totalSum / selectedInsurance.installments; let currentBalance = selectedInsurance.totalSum; const parts = selectedInsurance.date.split('-'); const startDate = new Date(parts[0], parts[1] - 1, parts[2]); for (let i = 1; i <= selectedInsurance.installments; i++) { currentBalance -= installmentValue; const dueDate = new Date(startDate); dueDate.setMonth(startDate.getMonth() + i); schedule.push({ number: i, dueDate, value: installmentValue, balance: Math.max(0, currentBalance) }); } 
+        return (
+            <div className="space-y-6 fade-in">
+                <div className="flex items-center gap-4">
+                    <button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full">
+                        <ArrowLeft size={24} />
+                    </button>
+                    <div>
+                        <h2 className="text-2xl font-bold text-slate-800">Detalhamento</h2>
+                        <p className="text-slate-500 text-sm">{selectedInsurance.insurer} • {selectedInsurance.policy}</p>
+                    </div>
+                </div>
+            <div className="bg-white rounded-xl shadow-sm border overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                    <thead className="bg-slate-50 text-slate-600 uppercase text-xs">
+                        <tr>
+                            <th className="px-3 py-3">#</th>
+                            <th className="px-3 py-3">Vencimento</th>
+                            <th className="px-3 py-3 text-right">Valor</th>
+                            <th className="px-3 py-3 text-right">Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y">{schedule.map(i => (<tr key={i.number} className="hover:bg-slate-50">
+                        <td className="px-3 py-2">{i.number}</td>
+                        <td className="px-3 py-2">{formatDate(i.dueDate)}</td>
+                        <td className="px-3 py-2 text-right font-bold text-purple-700">{formatCurrency(i.value)}</td>
+                        <td className="px-3 py-2 text-right font-medium">{formatCurrency(i.balance)}</td></tr>))}
+                    </tbody>
+                </table>
+            </div></div>); };
+        const InsuranceForm = ({ formData, setFormData, handleSubmit, setView, editingId, handleInputChange }) => { const totalSum = (parseFloat(formData.amount) || 0) + (parseFloat(formData.iof) || 0); 
+            return (
+                <div className="max-w-4xl mx-auto fade-in">
+                    <div className="flex items-center gap-4 mb-6">
+                        <button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full">
+                            <ArrowLeft size={24} />
+                        </button>
+                        <h2 className="text-2xl font-bold text-slate-800">{editingId ? 'Editar' : 'Novo'} Seguro</h2>
+                    </div>
+                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="col-span-full">
+                                <label className="block text-sm font-medium">Cliente</label>
+                                <input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                        <div>
+                            <label className="block text-sm font-medium">Apólice</label>
+                            <input required name="policy" value={formData.policy} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium">Seguradora</label>
+                            <input required name="insurer" value={formData.insurer} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium">Data</label>
+                            <input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium">Parc.</label>
+                            <input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium">Valor (R$)</label>
+                            <input required type="number" step="0.01" name="amount" value={formData.amount} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium">IOF (R$)</label>
+                            <input required type="number" step="0.01" name="iof" value={formData.iof} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                        </div>
+                        <div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center">
+                            <span className="text-slate-600 font-medium">Total Geral:</span>
+                            <span className="text-2xl font-bold text-purple-700">{formatCurrency(totalSum)}</span>
+                        </div></div>
+                        <div className="mt-8 flex justify-end gap-3">
+                            <button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button>
+                            <button type="submit" className="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Salvar</button>
+                        </div>
+                    </form></div>); };
         const InsuranceModule = ({ insurances, setInsurances }) => { const [view, setView] = useState('list'); const [selectedInsurance, setSelectedInsurance] = useState(null); const [editingId, setEditingId] = useState(null); const [showDeleteModal, setShowDeleteModal] = useState(false); const [itemToDelete, setItemToDelete] = useState(null); const [formData, setFormData] = useState({ client: '', policy: '', insurer: '', date: '', installments: '', amount: '', iof: '' }); const handleInputChange = (e) => { const { name, value } = e.target; setFormData({ ...formData, [name]: value }); }; const handleNewClick = () => { setEditingId(null); setFormData({ client: '', policy: '', insurer: '', date: '', installments: '', amount: '', iof: '' }); setView('add'); }; const handleEditClick = (item) => { setEditingId(item.id); setFormData({ ...item }); setView('add'); }; const handleDeleteClick = (item) => { setItemToDelete(item); setShowDeleteModal(true); }; const confirmDelete = () => { if (itemToDelete) { setInsurances(insurances.filter(i => i.id !== itemToDelete.id)); setItemToDelete(null); setShowDeleteModal(false); if (selectedInsurance && selectedInsurance.id === itemToDelete.id) { setSelectedInsurance(null); setView('list'); } } }; const handleSubmit = (e) => { e.preventDefault(); const amount = parseFloat(formData.amount) || 0; const iof = parseFloat(formData.iof) || 0; const data = { ...formData, amount, iof, installments: parseInt(formData.installments), totalSum: amount + iof }; if (editingId) { setInsurances(insurances.map(i => i.id === editingId ? { ...data, id: editingId } : i)); } else { setInsurances([...insurances, { ...data, id: Date.now() }]); } setView('list'); }; return (<> {view === 'list' && <InsuranceListView insurances={insurances} setSelectedInsurance={setSelectedInsurance} setView={setView} handleNewClick={handleNewClick} handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />} {view === 'details' && <InsuranceDetailsView selectedInsurance={selectedInsurance} setView={setView} />} {view === 'add' && <InsuranceForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} setView={setView} editingId={editingId} handleInputChange={handleInputChange} />} <DeleteModal isOpen={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={confirmDelete} title="Excluir Seguro" /> </>); };
 
         const LoanListView = ({ loans, setSelectedLoan, setView, handleNewClick, handleEditClick, handleDeleteClick }) => { const [searchTerm, setSearchTerm] = useState(''); const filteredLoans = loans.filter(loan => loan.client.toLowerCase().includes(searchTerm.toLowerCase()) || loan.contract.toLowerCase().includes(searchTerm.toLowerCase()) || loan.bank.toLowerCase().includes(searchTerm.toLowerCase())); const exportListToXLSX = () => { const headers = ["Cliente", "Contrato", "Banco", "Valor", "Total"]; const data = filteredLoans.map(l => [l.client, l.contract, l.bank, l.amount, l.totalSum]); const ws = XLSX.utils.aoa_to_sheet([headers, ...data]); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Contratos"); XLSX.writeFile(wb, "contratos.xlsx"); }; const exportListToPDF = () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text("Empréstimos", 14, 15); doc.autoTable({ head: [["Cliente", "Contrato", "Banco", "Total"]], body: filteredLoans.map(l => [l.client, l.contract, l.bank, formatCurrency(l.totalSum)]), startY: 20 }); doc.save("contratos.pdf"); }; return (<div className="space-y-6 fade-in"><div className="flex flex-col md:flex-row justify-between items-center gap-4"><h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2"><Building2 className="text-blue-600"/> Empréstimos</h2><div className="flex gap-2"><button onClick={exportListToXLSX} className="bg-green-600 text-white px-3 py-2 rounded text-sm flex gap-2"><FileSpreadsheet size={18} /> Excel</button><button onClick={exportListToPDF} className="bg-red-600 text-white px-3 py-2 rounded text-sm flex gap-2"><Download size={18} /> PDF</button><button onClick={handleNewClick} className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"><Plus size={20} /> Novo</button></div></div><div className="relative"><div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="text-slate-400" size={20} /></div><input type="text" placeholder="Buscar..." className="w-full pl-10 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /></div><div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden overflow-x-auto"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 uppercase text-xs"><tr><th className="px-4 py-3">Cliente</th><th className="px-4 py-3">Contrato</th><th className="px-4 py-3">Banco</th><th className="px-4 py-3">Data</th><th className="px-4 py-3 text-right">Valor</th><th className="px-4 py-3 text-right font-bold">Total</th><th className="px-4 py-3 text-center">Ações</th></tr></thead><tbody className="divide-y divide-slate-100">{filteredLoans.map((loan) => (<tr key={loan.id} className="hover:bg-blue-50 transition-colors cursor-pointer" onClick={() => { setSelectedLoan(loan); setView('details'); }}><td className="px-4 py-3 font-medium text-slate-900">{loan.client}</td><td className="px-4 py-3 text-blue-600">{loan.contract}</td><td className="px-4 py-3">{loan.bank}</td><td className="px-4 py-3">{formatDate(loan.date)}</td><td className="px-4 py-3 text-right">{formatCurrency(loan.amount)}</td><td className="px-4 py-3 text-right font-bold">{formatCurrency(loan.totalSum)}</td><td className="px-4 py-3"><div className="flex items-center justify-center gap-2"><button onClick={(e) => { e.stopPropagation(); handleEditClick(loan); }} className="p-1 text-blue-600"><Edit size={16} /></button><button onClick={(e) => { e.stopPropagation(); handleDeleteClick(loan); }} className="p-1 text-red-600"><Trash2 size={16} /></button><ChevronRight size={16} className="text-slate-300"/></div></td></tr>))}</tbody></table></div></div>); };
         const LoanDetailsView = ({ selectedLoan, setView }) => { if (!selectedLoan) return null; const schedule = []; const installmentValue = selectedLoan.totalSum / selectedLoan.installments; let currentTotalBalance = selectedLoan.totalSum; const parts = selectedLoan.date.split('-'); const startDate = new Date(parts[0], parts[1] - 1, parts[2]); for (let i = 1; i <= selectedLoan.installments; i++) { currentTotalBalance -= installmentValue; const dueDate = new Date(startDate); dueDate.setMonth(startDate.getMonth() + i); schedule.push({ installmentNumber: i, dueDate, value: installmentValue, totalBalance: Math.max(0, currentTotalBalance) }); } const exportDetailsPDF = () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Detalhamento`, 14, 15); doc.autoTable({ head: [["#", "Vencimento", "Valor", "Saldo Dev."]], body: schedule.map(i => [i.installmentNumber, formatDate(i.dueDate), formatCurrency(i.value), formatCurrency(i.totalBalance)]), startY: 30 }); doc.save(`detalhes.pdf`); }; return (<div className="space-y-6 fade-in"><div className="flex flex-col md:flex-row justify-between gap-4"><div className="flex items-center gap-4"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><div><h2 className="text-2xl font-bold text-slate-800">Detalhamento</h2><p className="text-slate-500 text-sm">{selectedLoan.bank} • {selectedLoan.contract}</p></div></div><div className="flex gap-2"><button onClick={exportDetailsPDF} className="bg-red-600 text-white px-3 py-2 rounded text-sm flex gap-2"><Download size={18}/> PDF</button></div></div><div className="grid grid-cols-1 md:grid-cols-4 gap-4"><div className="bg-white p-4 rounded-xl border bg-blue-50 border-blue-100"><p className="text-xs text-blue-600 font-semibold">Total Geral</p><p className="text-xl font-bold text-blue-800">{formatCurrency(selectedLoan.totalSum)}</p></div></div><div className="bg-white rounded-xl shadow-sm border overflow-x-auto"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 uppercase text-xs"><tr><th className="px-3 py-3">#</th><th className="px-3 py-3">Vencimento</th><th className="px-3 py-3 text-right">Valor</th><th className="px-3 py-3 text-right">Saldo</th></tr></thead><tbody className="divide-y">{schedule.map(i => (<tr key={i.installmentNumber} className="hover:bg-slate-50"><td className="px-3 py-2">{i.installmentNumber}</td><td className="px-3 py-2">{formatDate(i.dueDate)}</td><td className="px-3 py-2 text-right font-bold text-blue-700">{formatCurrency(i.value)}</td><td className="px-3 py-2 text-right font-medium text-slate-700">{formatCurrency(i.totalBalance)}</td></tr>))}</tbody></table></div></div>); };
-        const LoanForm = ({ formData, setFormData, handleSubmit, setView, editingLoanId, handleInputChange }) => { const rateVal = parseFloat(formData.rate) || 0; const fixedRateCost = formData.rateType === 'fixed' ? rateVal : ((parseFloat(formData.amount) || 0) * (rateVal / 100)); const currentTotal = (parseFloat(formData.amount) || 0) + (parseFloat(formData.totalInterest) || 0) + (parseFloat(formData.totalIOF) || 0) + (parseFloat(formData.fees) || 0) + (parseFloat(formData.insurance) || 0) + fixedRateCost; return (<div className="max-w-4xl mx-auto fade-in"><div className="flex items-center gap-4 mb-6"><button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full"><ArrowLeft size={24} /></button><h2 className="text-2xl font-bold text-slate-800">{editingLoanId ? 'Editar' : 'Novo'} Contrato</h2></div><form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-slate-200"><div className="grid grid-cols-1 md:grid-cols-3 gap-6"><div className="col-span-full"><label className="block text-sm font-medium">Cliente</label><input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Contrato</label><input required name="contract" value={formData.contract} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Banco</label><input required name="bank" value={formData.bank} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Data</label><input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Valor</label><input required type="number" step="0.01" name="amount" value={formData.amount} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Parc.</label><input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div><div><label className="block text-sm font-medium">Taxa</label><input required type="number" step="0.01" name="rate" value={formData.rate} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>{['totalInterest', 'totalIOF', 'fees', 'insurance'].map(field => (<div key={field}><label className="block text-sm font-medium capitalize">{field.replace('total', '')}</label><input required type="number" step="0.01" name={field} value={formData[field]} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" /></div>))}<div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center"><span className="text-slate-600 font-medium">Total:</span><span className="text-2xl font-bold text-blue-700">{formatCurrency(currentTotal)}</span></div></div><div className="mt-8 flex justify-end gap-3"><button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button><button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Salvar</button></div></form></div>); };
+        const LoanForm = (
+            { formData, setFormData, handleSubmit, setView, editingLoanId, handleInputChange }
+        ) => { 
+            const rateVal = parseFloat(formData.rate) || 0; 
+            const fixedRateCost = formData.rateType === 'fixed' ? rateVal : ((parseFloat(formData.amount) || 0) * (rateVal / 100)); 
+            const currentTotal = (parseFloat(formData.amount) || 0) + (parseFloat(formData.totalInterest) || 0) + (parseFloat(formData.totalIOF) || 0) + (parseFloat(formData.fees) || 0) + (parseFloat(formData.insurance) || 0) + fixedRateCost; 
+            return (
+                <div className="max-w-4xl mx-auto fade-in">
+                    <div className="flex items-center gap-4 mb-6">
+                        <button onClick={() => setView('list')} className="p-2 hover:bg-slate-200 rounded-full">
+                            <ArrowLeft size={24} />
+                        </button>
+                        <h2 className="text-2xl font-bold text-slate-800">{editingLoanId ? 'Editar' : 'Novo'} Contrato</h2>
+                    </div>
+                    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="col-span-full">
+                                <label className="block text-sm font-medium">Cliente</label>
+                                <input required name="client" value={formData.client} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Contrato</label>
+                                <input required name="contract" value={formData.contract} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Banco</label>
+                                <input required name="bank" value={formData.bank} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Data</label>
+                                <input required type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Valor</label>
+                                <input required type="number" step="0.01" name="amount" value={formData.amount} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Parc.</label>
+                                <input required type="number" name="installments" value={formData.installments} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium">Taxa</label>
+                                <input required type="number" step="0.01" name="rate" value={formData.rate} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                            </div>{['totalInterest', 'totalIOF', 'fees', 'insurance'].map(field => (<div key={field}>
+                                <label className="block text-sm font-medium capitalize">{field.replace('total', '')}</label>
+                                <input required type="number" step="0.01" name={field} value={formData[field]} onChange={handleInputChange} className="w-full p-2 border rounded outline-none" />
+                                </div>))}
+                            <div className="col-span-full mt-6 p-4 bg-slate-100 rounded-lg flex justify-between items-center">
+                                <span className="text-slate-600 font-medium">Total:</span>
+                                <span className="text-2xl font-bold text-blue-700">{formatCurrency(currentTotal)}</span>
+                            </div>
+                        </div>
+                        <div className="mt-8 flex justify-end gap-3">
+                            <button type="button" onClick={() => setView('list')} className="px-6 py-2 border rounded hover:bg-slate-50">Cancelar</button>
+                            <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Salvar</button>
+                            </div>
+                    </form>
+                </div>); };
         const LoansModule = ({ loans, setLoans }) => { const [view, setView] = useState('list'); const [selectedLoan, setSelectedLoan] = useState(null); const [editingLoanId, setEditingLoanId] = useState(null); const [showDeleteModal, setShowDeleteModal] = useState(false); const [loanToDelete, setLoanToDelete] = useState(null); const [formData, setFormData] = useState({ client: '', contract: '', bank: '', date: '', amount: '', installments: '', rate: '', rateType: 'percentage', totalInterest: '', totalIOF: '', fees: '', insurance: '' }); const handleInputChange = (e) => { const { name, value } = e.target; setFormData({ ...formData, [name]: value }); }; const handleNewClick = () => { setEditingLoanId(null); setFormData({ client: '', contract: '', bank: '', date: '', amount: '', installments: '', rate: '', rateType: 'percentage', totalInterest: '', totalIOF: '', fees: '', insurance: '' }); setView('add'); }; const handleEditClick = (loan) => { setEditingLoanId(loan.id); setFormData({ ...loan }); setView('add'); }; const handleDeleteClick = (loan) => { setLoanToDelete(loan); setShowDeleteModal(true); }; const confirmDelete = () => { if (loanToDelete) { setLoans(loans.filter(l => l.id !== loanToDelete.id)); setLoanToDelete(null); setShowDeleteModal(false); if (selectedLoan && selectedLoan.id === loanToDelete.id) { setSelectedLoan(null); setView('list'); } } }; const handleSubmit = (e) => { e.preventDefault(); const amount = parseFloat(formData.amount) || 0; const interest = parseFloat(formData.totalInterest) || 0; const iof = parseFloat(formData.totalIOF) || 0; const fees = parseFloat(formData.fees) || 0; const insurance = parseFloat(formData.insurance) || 0; const rateValue = parseFloat(formData.rate) || 0; const rateCost = formData.rateType === 'fixed' ? rateValue : (amount * (rateValue / 100)); const loanData = { ...formData, amount, installments: parseInt(formData.installments), rate: rateValue, totalInterest: interest, totalIOF: iof, fees: fees, insurance: insurance, totalSum: amount + interest + iof + fees + insurance + rateCost }; if (editingLoanId) { setLoans(loans.map(l => l.id === editingLoanId ? { ...loanData, id: editingLoanId } : l)); } else { setLoans([...loans, { ...loanData, id: Date.now() }]); } setView('list'); }; return (<> {view === 'list' && (<LoanListView loans={loans} setSelectedLoan={setSelectedLoan} setView={setView} handleNewClick={handleNewClick} handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />)} {view === 'details' && (<LoanDetailsView selectedLoan={selectedLoan} setView={setView} />)} {view === 'add' && (<LoanForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} setView={setView} editingLoanId={editingLoanId} handleInputChange={handleInputChange} />)} <DeleteModal isOpen={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={confirmDelete} /> </>); };
 
         // --- DASHBOARD & RELATÓRIOS (Atualizados para usar Seguros e Impostos Reais) ---
@@ -440,17 +705,107 @@
 
             return (
                 <div className="space-y-6 fade-in">
-                    <div className="flex justify-between items-center"><h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2"><ClipboardList className="text-indigo-600" /> Relatórios Financeiros</h2></div>
-                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200"><div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end"><div><label className="block text-sm font-medium mb-1">Início</label><input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full p-2 border rounded outline-none"/></div><div><label className="block text-sm font-medium mb-1">Fim</label><input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="w-full p-2 border rounded outline-none"/></div><div><label className="block text-sm font-medium mb-2">Filtrar</label><div className="flex gap-3"><label className="flex items-center gap-1"><input type="checkbox" checked={filters.loans} onChange={e => setFilters({...filters, loans: e.target.checked})}/> Empr.</label><label className="flex items-center gap-1"><input type="checkbox" checked={filters.insurance} onChange={e => setFilters({...filters, insurance: e.target.checked})}/> Seg.</label><label className="flex items-center gap-1"><input type="checkbox" checked={filters.taxes} onChange={e => setFilters({...filters, taxes: e.target.checked})}/> Imp.</label></div></div><button onClick={generateReport} className="bg-indigo-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2"><Filter size={18} /> Gerar</button></div></div>
-                    {reportData.length > 0 && (<div className="space-y-4"><div className="flex justify-between items-center bg-indigo-50 p-4 rounded border border-indigo-100"><div><p className="text-sm text-indigo-800">Total a Pagar:</p><p className="text-2xl font-bold text-indigo-900">{formatCurrency(grandTotal)}</p></div><div><p className="text-sm text-indigo-800">Saldo Devedor:</p><p className="text-xl font-bold text-indigo-700">{formatCurrency(grandOutstanding)}</p></div><div className="flex gap-2"><button onClick={exportExcel} className="bg-green-600 text-white px-3 py-2 rounded text-sm flex gap-2"><FileSpreadsheet size={18}/> Excel</button><button onClick={exportPDF} className="bg-red-600 text-white px-3 py-2 rounded text-sm flex gap-2"><Download size={18}/> PDF</button></div></div><div className="bg-white rounded shadow border overflow-hidden"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-slate-600 uppercase text-xs"><tr><th className="px-4 py-3">Cliente/Ref</th><th className="px-4 py-3">Instituição</th><th className="px-4 py-3 text-center">Qtd</th><th className="px-4 py-3 text-right">Total</th><th className="px-4 py-3 text-right">Saldo Dev.</th></tr></thead><tbody className="divide-y">{reportData.map((i, idx) => (<tr key={idx} className="hover:bg-slate-50"><td className="px-4 py-3 font-medium">{i.client}</td><td className="px-4 py-3">{i.bank}</td><td className="px-4 py-3 text-center">{i.count}</td><td className="px-4 py-3 text-right font-bold">{formatCurrency(i.total)}</td><td className="px-4 py-3 text-right text-red-600 font-medium">{formatCurrency(i.outstandingBalance)}</td></tr>))}</tbody></table></div></div>)}
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                            <ClipboardList className="text-indigo-600" /> Relatórios Financeiros
+                        </h2>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end"><div>
+                            <label className="block text-sm font-medium mb-1">Início</label>
+                            <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full p-2 border rounded outline-none"/>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Fim</label>
+                            <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="w-full p-2 border rounded outline-none"/>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Filtrar</label>
+                            <div className="flex gap-3">
+                                <label className="flex items-center gap-1">
+                                    <input type="checkbox" checked={filters.loans} onChange={e => setFilters({...filters, loans: e.target.checked})}/> Empr.
+                                </label>
+                            <label className="flex items-center gap-1">
+                                <input type="checkbox" checked={filters.insurance} onChange={e => setFilters({...filters, insurance: e.target.checked})}/> Seg.
+                            </label>
+                            <label className="flex items-center gap-1">
+                                <input type="checkbox" checked={filters.taxes} onChange={e => setFilters({...filters, taxes: e.target.checked})}/> Imp.
+                            </label>
+                        </div>
+                    </div>
+                    <button onClick={generateReport} className="bg-indigo-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
+                        <Filter size={18} /> Gerar
+                    </button>
+                </div></div>
+                    {reportData.length > 0 && (<div className="space-y-4"><div className="flex justify-between items-center bg-indigo-50 p-4 rounded border border-indigo-100">
+                        <div>
+                            <p className="text-sm text-indigo-800">Total a Pagar:</p>
+                            <p className="text-2xl font-bold text-indigo-900">{formatCurrency(grandTotal)}</p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-indigo-800">Saldo Devedor:</p>
+                            <p className="text-xl font-bold text-indigo-700">{formatCurrency(grandOutstanding)}</p>
+                        </div>
+                        <div className="flex gap-2">
+                            <button onClick={exportExcel} className="bg-green-600 text-white px-3 py-2 rounded text-sm flex gap-2">
+                                <FileSpreadsheet size={18}/> Excel
+                            </button>
+                            <button onClick={exportPDF} className="bg-red-600 text-white px-3 py-2 rounded text-sm flex gap-2">
+                                <Download size={18}/> PDF
+                            </button>
+                        </div></div>
+                        <div className="bg-white rounded shadow border overflow-hidden">
+                            <table className="w-full text-sm text-left">
+                                <thead className="bg-slate-50 text-slate-600 uppercase text-xs">
+                                    <tr>
+                                        <th className="px-4 py-3">Cliente/Ref</th>
+                                        <th className="px-4 py-3">Instituição</th>
+                                        <th className="px-4 py-3 text-center">Qtd</th>
+                                        <th className="px-4 py-3 text-right">Total</th>
+                                        <th className="px-4 py-3 text-right">Saldo Dev.</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y">{reportData.map((i, idx) => (<tr key={idx} className="hover:bg-slate-50">
+                                    <td className="px-4 py-3 font-medium">{i.client}</td>
+                                    <td className="px-4 py-3">{i.bank}</td>
+                                    <td className="px-4 py-3 text-center">{i.count}</td>
+                                    <td className="px-4 py-3 text-right font-bold">{formatCurrency(i.total)}</td>
+                                    <td className="px-4 py-3 text-right text-red-600 font-medium">{formatCurrency(i.outstandingBalance)}</td></tr>))}
+                                </tbody>
+                            </table>
+                        </div></div>)}
                 </div>
             );
         };
 
         // --- SIDEBAR ---
         const Sidebar = ({ activeModule, setActiveModule, isCollapsed, setIsCollapsed }) => {
-            const menuItems = [{ id: 'dashboard', label: 'Visão Geral', icon: <LayoutDashboard size={20} /> }, { id: 'loans', label: 'Empréstimos', icon: <Building2 size={20} /> }, { id: 'insurance', label: 'Seguros', icon: <Shield size={20} /> }, { id: 'taxes', label: 'Impostos', icon: <Banknote size={20} /> }, { id: 'reports', label: 'Relatórios', icon: <ClipboardList size={20} /> }];
-            return (<div className={`bg-slate-900 text-white h-screen fixed left-0 top-0 flex flex-col sidebar-transition ${isCollapsed ? 'w-20' : 'w-64'} shadow-xl z-50`}><div className="h-16 flex items-center justify-center border-b border-slate-800">{isCollapsed ? <TrendingUp size={28} className="text-blue-400" /> : <div className="flex items-center gap-2"><TrendingUp size={24} className="text-blue-400" /><span className="font-bold text-lg">Portal Financeiro</span></div>}</div><nav className="flex-1 py-6 space-y-2 px-2">{menuItems.map(item => (<button key={item.id} onClick={() => setActiveModule(item.id)} className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${activeModule === item.id ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`} title={isCollapsed ? item.label : ''}><div className="min-w-[20px]">{item.icon}</div>{!isCollapsed && <span className="font-medium whitespace-nowrap">{item.label}</span>}</button>))}</nav><div className="p-4 border-t border-slate-800"><button onClick={() => setIsCollapsed(!isCollapsed)} className="w-full flex items-center justify-center p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-slate-400 hover:text-white">{isCollapsed ? <ChevronRight size={20} /> : <div className="flex items-center gap-2"><ChevronLeft size={20} /><span className="text-sm">Recolher Menu</span></div>}</button></div></div>);
+            const menuItems = [
+                { id: 'dashboard', label: 'Visão Geral', icon: <LayoutDashboard size={20} /> }, 
+                { id: 'loans', label: 'Empréstimos', icon: <Building2 size={20} /> }, 
+                { id: 'insurance', label: 'Seguros', icon: <Shield size={20} /> }, 
+                { id: 'taxes', label: 'Impostos', icon: <Banknote size={20} /> }, 
+                { id: 'reports', label: 'Relatórios', icon: <ClipboardList size={20} /> }
+            ];
+            return (
+                <div className={`bg-slate-900 text-white h-screen fixed left-0 top-0 flex flex-col sidebar-transition ${isCollapsed ? 'w-20' : 'w-64'} shadow-xl z-50`}>
+                    <div className="h-16 flex items-center justify-center border-b border-slate-800">
+                        {isCollapsed ? <TrendingUp size={28} className="text-blue-400" /> : <div className="flex items-center gap-2">
+                            <TrendingUp size={24} className="text-blue-400" />
+                        <span className="font-bold text-lg">Portal Financeiro</span>
+                    </div>}
+                    </div>
+                    <nav className="flex-1 py-6 space-y-2 px-2">
+                        {menuItems.map(item => (<button key={item.id} onClick={() => setActiveModule(item.id)} 
+                            className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors ${activeModule === item.id ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`} title={isCollapsed ? item.label : ''}>
+                            <div className="min-w-[20px]">{item.icon}</div>{!isCollapsed && <span className="font-medium whitespace-nowrap">{item.label}</span>}</button>))}
+                    </nav>
+                    <div className="p-4 border-t border-slate-800">
+                        <button onClick={() => setIsCollapsed(!isCollapsed)} className="w-full flex items-center justify-center p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-slate-400 hover:text-white">
+                            {isCollapsed ? <ChevronRight size={20} /> : <div className="flex items-center gap-2"><ChevronLeft size={20} />
+                                <span className="text-sm">Recolher Menu</span></div>}
+                        </button>
+                    </div></div>);
         };
 
         // --- APP MAIN ---
@@ -470,7 +825,20 @@
                 <div className="min-h-screen bg-slate-50 font-sans">
                     <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed} />
                     <div className={`sidebar-transition ${isSidebarCollapsed ? 'ml-20' : 'ml-64'} p-4 md:p-8`}>
-                        <div className="flex justify-between items-center mb-8 pb-4 border-b border-slate-200"><div><h1 className="text-2xl font-bold text-slate-800">{activeModule === 'dashboard' && 'Visão Geral'}{activeModule === 'loans' && 'Central de Empréstimos'}{activeModule === 'insurance' && 'Central de Seguros'}{activeModule === 'taxes' && 'Gestão Tributária'}{activeModule === 'reports' && 'Relatórios Financeiros'}</h1><p className="text-sm text-slate-500">Bem-vindo, Gestor</p></div><div className="text-sm text-slate-400 bg-white px-3 py-1 rounded-full border shadow-sm">{new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>
+                        <div className="flex justify-between items-center mb-8 pb-4 border-b border-slate-200"><div>
+                            <h1 className="text-2xl font-bold text-slate-800">
+                                {activeModule === 'dashboard' && 'Visão Geral'}
+                                {activeModule === 'loans' && 'Central de Empréstimos'}
+                                {activeModule === 'insurance' && 'Central de Seguros'}
+                                {activeModule === 'taxes' && 'Gestão Tributária'}
+                                {activeModule === 'reports' && 'Relatórios Financeiros'}
+                            </h1>
+                            <p className="text-sm text-slate-500">Bem-vindo, Gestor</p>
+                        </div>
+                    <div className="text-sm text-slate-400 bg-white px-3 py-1 rounded-full border shadow-sm">
+                        {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
+                    </div>
+                </div>
                         <main>
                             {activeModule === 'dashboard' && <DashboardModule loans={loans} insurances={insurances} taxes={taxes} />}
                             {activeModule === 'loans' && <LoansModule loans={loans} setLoans={setLoans} />}
